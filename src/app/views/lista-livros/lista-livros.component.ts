@@ -1,4 +1,4 @@
-import { VolumeInfo } from './../../models/interfaces';
+import { VolumeInfo, ImageLinks } from './../../models/interfaces';
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Livro } from 'src/app/models/interfaces';
@@ -30,13 +30,13 @@ export class ListaLivrosComponent implements OnDestroy{
 
     itens.forEach(item => {
       livros.push(this.livro = {
-        title: item.VolumeInfo?.Title,
-        authors: item.VolumeInfo?.authors,
-        publisher: item.VolumeInfo?.publisher,
-        publishedDate: item.VolumeInfo?.publishedDate,
-        description: item.VolumeInfo?.description,
-        previewLink: item.VolumeInfo?.previewLink,
-        thumbnail: item.VolumeInfo?.imageLinks.thumbnail
+        title: item.volumeInfo?.title,
+        authors: item.volumeInfo?.authors,
+        publisher: item.volumeInfo?.publisher,
+        publishedDate: item.volumeInfo?.publishedDate,
+        description: item.volumeInfo?.description,
+        previewLink: item.volumeInfo?.previewLink,
+        thumbnail: item.volumeInfo?.imageLinks?.thumbnail
       })
     })
     return livros;
