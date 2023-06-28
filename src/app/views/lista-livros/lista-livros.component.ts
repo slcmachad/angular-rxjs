@@ -11,7 +11,7 @@ import { LivroService } from 'src/app/service/livro.service';
 })
 export class ListaLivrosComponent implements OnDestroy{
 
-  listaLivros: [];
+  listaLivros: Livro[];
   campoBusca: string = '';
   subscription: Subscription;
   livro: Livro;
@@ -20,17 +20,16 @@ export class ListaLivrosComponent implements OnDestroy{
 
   buscarLivros(){
     this.subscription = this.service.buscar(this.campoBusca).subscribe({
-      next: retornoAPI => console.log(),
-      error: erro => console.error(erro),
-      complete: () => console.log('Observable completado')
+      next: (items) => {this.listaLivros = this.livrosResultadoParaLivros(items)},
+      error: erro => console.error(erro)
     })
   }
 
-  livrosResultadoParaLivros(itens){
+  livrosResultadoParaLivros(itens): Livro[]{
     const livros: Livro[] = [];
 
     itens.forEach(item => {
-      this.livro = {
+      livros.push(this.livro = {
         title: item.VolumeInfo?.Title,
         authors: item.VolumeInfo?.authors,
         publisher: item.VolumeInfo?.publisher,
@@ -38,8 +37,9 @@ export class ListaLivrosComponent implements OnDestroy{
         description: item.VolumeInfo?.description,
         previewLink: item.VolumeInfo?.previewLink,
         thumbnail: item.VolumeInfo?.imageLinks.thumbnail
-      }
+      })
     })
+    return livros;
   }
 
   ngOnDestroy(){
